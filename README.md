@@ -17,5 +17,8 @@ I was tasked with building an internal social network for Groupomania's employee
 
 ##Author
 @Openclassrooms
-<li> [![Linkedin Badge](https://img.shields.io/badge/-TaylorRodewald-blue?style=flat&logo=Linkedin&logoColor=white)](www.linkedin.com/in/taylor-rodewald)
+<li> 
+  <a href="https://www.linkedin.com/in/taylor-rodewald/">
+    <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
 <li> Twitter: @rodewald_taylor
