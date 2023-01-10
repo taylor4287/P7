@@ -3,19 +3,19 @@ OpenClassrooms Project 7: Create a Web Application with Vue.js
 
 I was tasked with building an internal social network for Groupomania's employees to facilitate more interaction between colleagues.
 
-##Skills Learned
+## Skills Learned
 <li> Store data securely using SQL
 <li> Build a full-stack solution
 <li> Manage a user session
 <li> Send personalized content to a client
 
-##Languages and Skills Used
+## Languages and Skills Used
 <li> Html
 <li> CSS
 <li> Vue.js
 <li> SQL
 
-##Author
+## Author
 <li> @Openclassrooms
 <li> 
   <a href="https://www.linkedin.com/in/taylor-rodewald/">
