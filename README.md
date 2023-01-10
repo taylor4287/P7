@@ -16,7 +16,7 @@ I was tasked with building an internal social network for Groupomania's employee
 <li> SQL
 
 ##Author
-@Openclassrooms
+<li> @Openclassrooms
 <li> 
   <a href="https://www.linkedin.com/in/taylor-rodewald/">
     <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
