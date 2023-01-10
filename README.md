@@ -1,0 +1,27 @@
+# P7_Rodewald_Taylor *Ongoing*
+OpenClassrooms Project 7: Create a Web Application with Vue.js
+
+I was tasked with building an internal social network for Groupomania's employees to facilitate more interaction between colleagues.
+
+##Skills Learned
+<li> Store data securely using SQL
+<li> Build a full-stack solution
+<li> Manage a user session
+<li> Send personalized content to a client
+
+##Languages and Skills Used
+<li> Html
+<li> CSS
+<li> Vue.js
+<li> SQL
+
+##Author
+@Openclassrooms
+<li>
+  <a href="www.linkedin.com/in/taylor-rodewald">
+    <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
+<li>
+  <a herf="https://twitter.com/rodewald_taylor">
+    <img src="https://img.shields.io/badge/Twitter-blue?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
+  </a>
