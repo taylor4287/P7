@@ -15,6 +15,7 @@ const normalizePort = val => {
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+// error handler
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
     throw error;
@@ -37,6 +38,7 @@ const errorHandler = error => {
 
 const server = http.createServer(app);
 
+// event listener
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();

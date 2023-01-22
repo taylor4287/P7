@@ -1,27 +1,29 @@
+const Sequelize = require('sequelize');
+const sequelize = require('../app')
+
 module.exports = (sequelize, Sequelize) => {
-	const Customer = sequelize.define('customer', {	
-	  id: {
+	const User = sequelize.define('user', {	
+		id: {
 			type: Sequelize.INTEGER,
+			allowNull: false,
 			autoIncrement: true,
 			primaryKey: true
-    },
-	  firstname: {
+    	},
+		firstname: {
 			type: Sequelize.STRING
-	  },
-	  lastname: {
+		},
+		lastname: {
 			type: Sequelize.STRING
-  	},
-	  address: {
+  		},
+		email: {
 			type: Sequelize.STRING
-	  },
-	  age: {
+		},
+		password: {
 			type: Sequelize.INTEGER
-    },
-    copyrightby: {
-      type: Sequelize.STRING,
-      defaultValue: 'https://loizenai.com'
-    }
+		},
+		position: {
+			type: Sequelize.STRING
+		}
 	});
-	
-	return Customer;
+	return User;
 }
