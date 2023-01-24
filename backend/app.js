@@ -1,11 +1,19 @@
+// imports
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 
+const userRoutes = require('./routers/user_route');
+const postRoutes = require('./routers/post_route');
+
 // database connection
 const db = require('./config/db.config.js');
-
+db.authenticate().then(() => {
+  console.log('Database connected...');
+}).catch(err => {
+  console.log('Error: ' + err);
+})
 
 const app = express();
 
@@ -20,5 +28,12 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+// routes
+app.use('./users', userRoutes);
+app.use('./posts', postRoutes);
+
+// images
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
