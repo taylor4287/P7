@@ -5,23 +5,16 @@
             <img id="uploadImage" src="imagePreview">
         </div>
         <div id="inputText">
-            <h3>Title:</h3>
+            <h3>Change Title:</h3>
             <input type="text" placeholder="Input title here ..."><br/>
-            <h4>Description:</h4>
+            <h4>Change Description:</h4>
             <textarea id="script" type="text" placeholder="Input description here ..." cols="50" rows="10"></textarea><br/>
-            <router-link id="post" class="postBtn" to="/">Post</router-link>
+        <router-link id="post" class="editPostBtn" to="/">Edit Post</router-link>
         </div>
     </section>
 </template>
 
-// delete button needs post model and user model
-// need to figure out new posts
-// authorization headers -> proj 6
-
-<script>
-// create event listener to get the input.files from input
-// image.src = URL.createObjectURL(input.files[0]);
-</script>
+<script></script>
 
 <style lang="scss">
     #createPost {
@@ -43,6 +36,7 @@
         height: 100%;
         input {
             margin: auto;
+            content: 'Change Image';
             // display: none;
         }
     }
@@ -58,11 +52,10 @@
     }
     #script {
         height: 40%;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
-    .postBtn {
-        margin-left: 230px;
-        width: 70px;
+    .editPostBtn {
+        width: 80px;
         height: 20px;
         padding: 10px;
     }

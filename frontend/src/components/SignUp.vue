@@ -8,7 +8,10 @@
             <input type="text" placeholder="Email"><br>
             <input type="text" placeholder="Create Password"><br>
             <input type="text" placeholder="Job Role"><br>
-            <router-link to="/">Sign Up</router-link>
+            <!-- <label>Choose Profile Image</label>
+            <input type="file" accept="image/*"><br><br> -->
+            <router-link id="post" class="postBtn" to="/">Sign Up</router-link>
+            <router-link to="/logIn">Have an account?</router-link>
         </form>
     </section>
 </template>
@@ -18,6 +21,7 @@
 <style lang="scss">
     #signUp {
         text-align: center;
+        margin-top: 100px;
     }
     #signUpForm {
         width: 200px;
@@ -27,6 +31,12 @@
         border-color: red;
         input {
             margin: 5px;
+        }
+        .postBtn {
+            margin-left: 50px;
+            width: 60px;
+            height: 17px;
+            padding: 15px;
         }
     }
 </style>

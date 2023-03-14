@@ -1,36 +1,34 @@
 
 <template>
-  <nav>
-    <router-link to="/">Home</router-link>
-    <router-link to="/login">Login</router-link>
-    <router-link to="/signup">Sign Up</router-link>
-    <router-link to="/createPost">Create Post</router-link>
-    <router-link to="/Account">Account</router-link>
-  </nav>
-  <router-view/>
+  <headerView />
 </template>
 
+<script>
+import headerView from '@/components/HeaderView.vue'
+
+export default {
+  components: {
+    headerView
+  }
+}
+</script>
+
 <style lang="scss">
-#app {
+html, body {
   margin: 0;
   padding: 0;
-//   font-family: Avenir, Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-  // text-align: right;
-//   color: #2c3e50;
+  height: 100%;
 }
-
-// nav {
-//   padding: 30px;
-
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
+#post {
+  margin-left: 65px;
+  display: block;
+  text-align: center;
+  border-color: black;
+  border-style: inset;
+  border-width: 2px;
+  background: radial-gradient(red 65%, black);
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+}
 </style>

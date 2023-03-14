@@ -1,15 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../components/Home.vue'
+import HomePage from '../components/HomePage.vue'
 import LogIn from '../components/LogIn.vue'
 import SignUp from '../components/SignUp.vue'
 import AcCount from '../components/AcCount.vue'
 import CreatePost from '../components/CreatePost.vue'
+import EditPost from '../components/EditPost.vue'
+import SinglePost from '../components/SinglePost.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'homepage',
+    component: HomePage
   },
   {
     path: '/login',
@@ -27,9 +29,19 @@ const routes = [
     component: AcCount
   },
   {
-    path: '/CreatePost',
-    name: 'CreatePost',
+    path: '/createpost',
+    name: 'createpost',
     component: CreatePost
+  },
+  {
+    path: '/editpost',
+    name: 'editpost',
+    component: EditPost
+  },
+  {
+    path: '/singlepost',
+    name: 'singlepost',
+    component: SinglePost
   }
 ]
 
