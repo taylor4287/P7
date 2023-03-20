@@ -2,21 +2,58 @@
 <template>
     <section id="signUp">
         <h2>Sign Up</h2>
-        <form id="signUpForm">
-            <input type="text" placeholder="First Name"><br>
-            <input type="text" placeholder="Last Name"><br>
-            <input type="text" placeholder="Email"><br>
-            <input type="text" placeholder="Create Password"><br>
-            <input type="text" placeholder="Job Role"><br>
-            <!-- <label>Choose Profile Image</label>
-            <input type="file" accept="image/*"><br><br> -->
-            <router-link id="post" class="postBtn" to="/">Sign Up</router-link>
+        <form @submit.prevent="signUp" id="signUpForm">
+            <span class="message">{{ error }}</span><br>
+            <input type="text" v-model="form.firstName" placeholder="First Name"><br>
+            <input type="text" v-model="form.lastName" placeholder="Last Name"><br>
+            <input type="email" v-model="form.email" placeholder="Email"><br>
+            <input type="password" v-model="form.password" placeholder="Create Password"><br>
+            <input type="text" v-model="form.position" placeholder="Job Role"><br>
+            <button type="button" id="post" class="postBtn" v-on:click="signUp">Sign Up</button>
             <router-link to="/logIn">Have an account?</router-link>
         </form>
     </section>
 </template>
 
-<script></script>
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      error: '',
+      validMessage: '',
+      form: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        position: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    async signUp () {
+      if (this.form.firstName === '' || this.form.lastName === '' || this.form.email === '' || this.form.position === '' || this.form.password === '') {
+        this.error = 'Invalid form'
+        return
+      }
+
+      const result = await axios.post('http://localhost:3000/users/signup', {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        position: this.position,
+        password: this.password
+      }
+      )
+      console.log(result)
+      if (result.status === 201) {
+        alert('Sign Up Done')
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss">
     #signUp {
@@ -34,9 +71,10 @@
         }
         .postBtn {
             margin-left: 50px;
-            width: 60px;
-            height: 17px;
+            width: 90px;
+            height: 45px;
             padding: 15px;
+            cursor: pointer;
         }
     }
 </style>

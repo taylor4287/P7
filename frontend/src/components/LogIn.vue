@@ -42,5 +42,6 @@
         width: 80px;
         height: 50px;
         padding: 15px;
+        cursor: pointer;
    }
 </style>

@@ -1,16 +1,17 @@
 <template>
     <section id="createPost">
         <div id="imageInput">
-            <input type="file" accept="image/*">
-            <img id="uploadImage" src="imagePreview">
+            <input @change="onFileSelected" id="input" type="file" accept="image/*">
+            <img v-if="url" id="uploadImage" :src="url">
         </div>
-        <div id="inputText">
+        <form @submit.prevent="post" id="inputText">
+            <span class="message">{{ error }}</span><br>
             <h3>Title:</h3>
-            <input type="text" placeholder="Input title here ..."><br/>
+            <input v-model="title" type="text" placeholder="Input title here ..."><br/>
             <h4>Description:</h4>
             <textarea id="script" type="text" placeholder="Input description here ..." cols="50" rows="10"></textarea><br/>
-            <router-link id="post" class="postBtn" to="/">Post</router-link>
-        </div>
+            <button v-on:click="post" id="post" class="postBtn">Post</button>
+        </form>
     </section>
 </template>
 
@@ -19,8 +20,26 @@
 // authorization headers -> proj 6
 
 <script>
-// create event listener to get the input.files from input
-// image.src = URL.createObjectURL(input.files[0]);
+export default {
+  data () {
+    return {
+      url: null,
+      error: '',
+      title: ''
+    }
+  },
+  methods: {
+    async post () {
+      if (this.title === '') {
+        this.error = 'Title Required'
+      }
+    },
+    onFileSelected (e) {
+      const file = e.target.files[0]
+      this.url = URL.createObjectURL(file)
+    }
+  }
+}
 </script>
 
 <style lang="scss">
@@ -63,7 +82,8 @@
     .postBtn {
         margin-left: 230px;
         width: 70px;
-        height: 20px;
+        height: 40px;
         padding: 10px;
+        cursor: pointer;
     }
 </style>

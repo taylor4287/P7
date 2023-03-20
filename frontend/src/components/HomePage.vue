@@ -1,9 +1,10 @@
 <template>
   <div id="homePosts">
-    <router-link id="postWrap" class="createPost" to="/createPost">
-      <i class="fa-solid fa-plus"></i>
-    </router-link>
-    <div id="postWrap"></div>
+    <div id="postWrap">
+      <div id="new">
+        <span>Unread</span>
+      </div>
+    </div>
     <div id="postWrap"></div>
     <div id="postWrap"></div>
     <div id="postWrap"></div>
@@ -32,5 +33,13 @@
     position: absolute;
     top: 315px;
     left: 213px;
+  }
+  #new {
+    border: 1px solid red;
+    padding: 10px;
+    color: white;
+    background-color: red;
+    height: 15px;
+    width: 50px;
   }
 </style>

@@ -4,6 +4,7 @@ const userModel = require('../models/user_model');
 
 // sign up
 exports.signup = (req, res, next) => {
+    console.log('here')
     bcrypt.hash(req.body.password, 10).then(
         (hash) => {
             const user = new userModel({

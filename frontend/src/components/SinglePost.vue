@@ -3,7 +3,7 @@
         <section id="singlepost">
             <img id="postImg" src="postImg"/>
             <div id="description"></div>
-            <router-link id="post" class="edit" to="/editpost">Edit</router-link>
+            <button id="post" class="edit">Edit</button>
         </section>
         <section id="comments">
             <div id="otherComments" class="comment"></div>
@@ -30,9 +30,10 @@
         position: absolute;
         top: 210px;
         left: 443px;
-        height: 20px;
-        width: 60px;
+        height: 40px;
+        width: 70px;
         padding: 10px;
+        cursor: pointer;
     }
     #otherComments {
         border-style: solid;
@@ -56,6 +57,7 @@
         width: 90px;
         height: 40px;
         padding: 10px;
+        cursor: pointer;
     }
     #description {
         border-style: solid;

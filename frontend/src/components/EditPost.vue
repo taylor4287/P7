@@ -9,7 +9,7 @@
             <input type="text" placeholder="Input title here ..."><br/>
             <h4>Change Description:</h4>
             <textarea id="script" type="text" placeholder="Input description here ..." cols="50" rows="10"></textarea><br/>
-        <router-link id="post" class="editPostBtn" to="/">Edit Post</router-link>
+        <button id="post" class="editPostBtn">Edit Post</button>
         </div>
     </section>
 </template>
@@ -55,8 +55,9 @@
         margin-bottom: 30px;
     }
     .editPostBtn {
-        width: 80px;
-        height: 20px;
+        width: 90px;
+        height: 40px;
         padding: 10px;
+        cursor: pointer;
     }
 </style>

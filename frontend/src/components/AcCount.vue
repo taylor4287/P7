@@ -3,14 +3,17 @@
     <section id="profile">
         <div class="fixed">
             <div id="profileImg">
-                <img src="profileImg">
+                <img src="../../images/icon.png">
             </div>
             <div id="flex">
                 <h3>name here</h3>
                 <h4>job title here</h4>
             </div>
             <p id="descript">description here</p>
-            <button id="deleteBtn" class="post">Delete Profile</button>
+            <div id="accountBtns">
+                <button class="deleteBtn" id="post">Delete Profile</button>
+                <button class="deleteBtn" id="post">Log Out</button>
+            </div>
         </div>
         <section id="posts">
             <p id="none">'Name' does not have any posts</p>
@@ -34,6 +37,9 @@
         border-style: solid;
         width: 200px;
         height: 200px;
+        img {
+            width: 200px;
+        }
     }
     #flex {
         display: flex;
@@ -47,22 +53,13 @@
     #descript {
         margin: 30px;
     }
-    #deleteBtn {
+    .deleteBtn {
         text-align: center;
         margin-left: 45px;
         width: 120px;
         height: 50px;
         padding: 15px;
-    }
-    .post {
-        display: block;
-        border-color: black;
-        border-style: inset;
-        border-width: 2px;
-        background: radial-gradient(red 65%, black);
-        color: white;
-        border-radius: 50%;
-        text-decoration: none;
+        cursor: pointer;
     }
     #none {
         display: none;
@@ -82,5 +79,8 @@
     }
     .fixed {
         margin-top: 30px;
+    }
+    #accountBtns {
+        display: flex;
     }
 </style>
