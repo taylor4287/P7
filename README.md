@@ -15,6 +15,19 @@ I was tasked with building an internal social network for Groupomania's employee
 <li> Vue.js
 <li> SQL
 
+##Run Project
+<li> Backend: <br>
+
+```
+npm run start
+```
+
+<li> Frontend: <br>
+
+```
+npm run serve
+```
+
 ## Author
 <li> @Openclassrooms
 <li> 
