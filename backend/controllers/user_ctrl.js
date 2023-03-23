@@ -4,29 +4,24 @@ const userModel = require('../models/user_model');
 
 // sign up
 exports.signup = (req, res, next) => {
-    console.log('here')
-    bcrypt.hash(req.body.password, 10).then(
-        (hash) => {
-            const user = new userModel({
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                position: req.body.position,
-                email: req.body.email,
-                password: hash
+    userModel.create ({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: bcrypt.hash(req.body.password, 10),
+        position: req.body.position
+    });
+    userModel.save().then(
+        () => {
+            res.status(201).json({
+                message: 'User added successfully!'
             });
-            user.save().then(
-                () => {
-                    res.status(201).json({
-                        message: 'User added successfully!'
-                    });
-                }
-            ).catch(
-                (error) => {
-                    res.status(500).json({
-                        error: error
-                    });
-                }
-            );
+        }
+    ).catch(
+        (error) => {
+            res.status(500).json({
+                error: error
+            });
         }
     );
 };

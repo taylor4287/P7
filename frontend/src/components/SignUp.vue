@@ -38,15 +38,25 @@ export default {
         return
       }
 
+      this.error = ''
       const result = await axios.post('http://localhost:3000/users/signup', {
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email,
         position: this.position,
         password: this.password
+      }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }
       )
-      console.log(result)
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
       if (result.status === 201) {
         alert('Sign Up Done')
       }
