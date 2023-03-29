@@ -15,5 +15,7 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.DB_USERNAME, p
       connectionTimeoutMillis: 0,
     }
 });
- 
+
+sequelize.sync({alter:true});
+
 module.exports = sequelize;

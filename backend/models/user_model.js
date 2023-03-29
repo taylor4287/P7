@@ -1,35 +1,26 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../app');
+const Sequelize = require("sequelize");
+const sequelize = require("../config/db.config");
 
-module.exports = (sequelize, Sequelize) => {
-	const User = sequelize.define('user', {	
-		id: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			autoIncrement: true,
-			primaryKey: true
-    	},
-		firstname: {
-			type: Sequelize.STRING,
-			allowNull: false
-		},
-		lastname: {
-			type: Sequelize.STRING,
-			allowNull: false
-  		},
-		email: {
-			type: Sequelize.STRING,
-			allowNull: false
-		},
-		password: {
-			type: Sequelize.STRING,
-			allowNull: false
-		},
-		position: {
-			type: Sequelize.STRING,
-			allowNull: false
-		}
-	});
-	return User;
-	console.log(User)
-};
+module.exports = sequelize.define("user", {
+  firstname: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  lastname: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  position: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});

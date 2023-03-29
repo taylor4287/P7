@@ -33,32 +33,28 @@ export default {
   },
   methods: {
     async signUp () {
-      if (this.form.firstName === '' || this.form.lastName === '' || this.form.email === '' || this.form.position === '' || this.form.password === '') {
+      if (this.form.firstName === '' || this.form.lastName === '' || this.form.email === '' || this.form.password === '' || this.form.position === '') {
         this.error = 'Invalid form'
         return
       }
 
       this.error = ''
+
       const result = await axios.post('http://localhost:3000/users/signup', {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        position: this.position,
-        password: this.password
+        firstname: this.form.firstName,
+        lastname: this.form.lastName,
+        email: this.form.email,
+        password: this.form.password,
+        position: this.form.position
       }, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json'
         }
-      }
-      )
-        .then(function (response) {
-          console.log(response)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      })
+      console.warn(result)
       if (result.status === 201) {
         alert('Sign Up Done')
+        this.$router.push({ path: '/' })
       }
     }
   }

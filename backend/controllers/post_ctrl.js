@@ -4,7 +4,7 @@ const fs = require('fs');
 
 // get all posts
 exports.allPosts = (req, res, next) => {
-    Post.find().then(
+    Post.findAll().then(
         (posts) => {
           res.status(200).json(posts);
         }
@@ -21,7 +21,7 @@ exports.allPosts = (req, res, next) => {
 exports.createPost = (req, res, next) => {
     req.body.post = JSON.parse(req.body.post);
 
-    const sauce = new Sauce({
+    const post = new Post({
         userName: req.body.userName,
         images: url + '/images/' + req.file.filename,
         date: req.body.date,
@@ -32,7 +32,7 @@ exports.createPost = (req, res, next) => {
     post.save().then(
         () => {
             res.status(201).json({
-                message: 'Sauce saved successfully!'
+                message: 'Post saved successfully!'
             });
         }
     ).catch(
@@ -46,7 +46,7 @@ exports.createPost = (req, res, next) => {
 
 // get one post
 exports.getOne = (req, res, next) => {
-    post.findOne({ id: req.params.id }).then(
+    Post.findOne({ id: req.params.id }).then(
         (post) => {
             res.status(200).json(post);
         }
@@ -61,7 +61,7 @@ exports.getOne = (req, res, next) => {
 
 // modify post
 exports.modifyPost = (req, res, next) => {
-    let post = new Post({ _id: req.params._id });
+    let Post = new Post({ _id: req.params._id });
     Post.findOne({ _id: req.params._id }).then(
       (post) => {
         if (req.file) {
@@ -95,7 +95,6 @@ exports.modifyPost = (req, res, next) => {
           }
         ).catch(
           (error) => {
-            console.log(error);
             res.status(400).json({
               error: error
             });
