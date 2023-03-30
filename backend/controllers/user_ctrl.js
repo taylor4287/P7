@@ -21,8 +21,9 @@ exports.signup = (req, res, next) => {
         });
       })
       .catch((error) => {
+        console.log(error.stack);
         res.status(500).json({
-          error: error,
+            error: error.message || error,
         });
       });
   });
@@ -93,8 +94,9 @@ exports.findAll = (req, res, next) => {
       res.status(200).json(users);
     })
     .catch((error) => {
+        console.log(error.stack);
       res.status(400).json({
-        error: error,
+        error: error.message || error,
       });
     });
 };
