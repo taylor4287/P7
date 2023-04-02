@@ -11,6 +11,17 @@
   </div>
 </template>
 
+<script>
+export default {
+  beforeCreate () {
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
+      this.$router.push({ path: '/login' })
+    }
+  }
+}
+</script>
+
 <style lang="scss">
   #homePosts {
     margin: 70px;

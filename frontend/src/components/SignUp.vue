@@ -54,8 +54,14 @@ export default {
       console.warn(result)
       if (result.status === 201) {
         alert('Sign Up Done')
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/login' })
       }
+    }
+  },
+  mounted () {
+    const userId = localStorage.getItem('userId')
+    if (userId) {
+      this.$router.push({ path: '/' })
     }
   }
 }

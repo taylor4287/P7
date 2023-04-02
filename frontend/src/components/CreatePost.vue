@@ -21,6 +21,12 @@
 
 <script>
 export default {
+  beforeCreate () {
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
+      this.$router.push({ path: '/login' })
+    }
+  },
   data () {
     return {
       url: null,

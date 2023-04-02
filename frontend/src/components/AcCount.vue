@@ -6,13 +6,15 @@
                 <img src="../../images/icon.png">
             </div>
             <div id="flex">
-                <h3>name here</h3>
-                <h4>job title here</h4>
+                <div class="name">
+                    <h2>{{ firstName }}</h2>
+                    <h2>{{ lastName }}</h2>
+                </div>
+                <h3>{{ jobTitle }}</h3>
             </div>
-            <p id="descript">description here</p>
             <div id="accountBtns">
-                <button class="deleteBtn" id="post">Delete Profile</button>
-                <button class="deleteBtn" id="post">Log Out</button>
+                <button v-on:click="deleteAccount" type="button" class="deleteBtn" id="post">Delete Profile</button>
+                <button v-on:click="logout" type="button" class="deleteBtn" id="post">Log Out</button>
             </div>
         </div>
         <section id="posts">
@@ -26,6 +28,50 @@
         </section>
     </section>
 </template>
+
+<script>
+import axios from 'axios'
+export default {
+  beforeCreate () {
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
+      this.$router.push({ path: '/login' })
+    }
+  },
+  data () {
+    return {
+      firstName: '',
+      lastName: '',
+      jobTitle: ''
+    }
+  },
+  async created () {
+    const token = localStorage.getItem('token')
+    const load = await axios.get(
+      `http://localhost:3000/users/${token}`
+    )
+    this.firstName = load.data.firstname
+    this.lastName = load.data.lastname
+    this.jobTitle = load.data.position
+  },
+  methods: {
+    deleteAccount () {
+      const userId = JSON.parse(localStorage.getItem('userId'))
+      axios.delete(
+        `http://localhost:3000/users/${userId}`
+      ).then(() => {
+        localStorage.clear()
+        this.$router.push({ name: 'login' })
+        console.log('Account deleted')
+      })
+    },
+    async logout () {
+      localStorage.clear()
+      this.$router.push({ name: 'login' })
+    }
+  }
+}
+</script>
 
 <style lang="scss">
     #profile {
@@ -49,9 +95,12 @@
         position: absolute;
         top: 200px;
         left:350px;
-    }
-    #descript {
-        margin: 30px;
+        .name {
+            display: flex;
+            h2 {
+              margin-right: 10px;
+            }
+        }
     }
     .deleteBtn {
         text-align: center;
@@ -82,5 +131,6 @@
     }
     #accountBtns {
         display: flex;
+        margin-top: 20px;
     }
 </style>

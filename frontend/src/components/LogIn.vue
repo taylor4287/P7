@@ -47,9 +47,16 @@ export default {
       console.warn(response)
       if (response.status === 200) {
         alert('Login Done')
-        localStorage.setItem('userInfo', JSON.stringify(response.data))
+        localStorage.setItem('userId', JSON.stringify(response.data.userId))
+        localStorage.setItem('token', JSON.stringify(response.data.token))
         this.$router.push({ path: '/' })
       }
+    }
+  },
+  mounted () {
+    const userId = localStorage.getItem('userId')
+    if (userId) {
+      this.$router.push({ path: '/' })
     }
   }
 }

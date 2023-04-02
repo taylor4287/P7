@@ -3,23 +3,13 @@ const sequelize = require('../config/db.config');
 
 module.exports = sequelize.define('post', {
     // look these up
-    id: {
+    userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
     },
-    userName: {
+    mediaUrl: {
         type: Sequelize.STRING,
-        allowNull: false,
-    },
-    images: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    date: {
-        type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     title: {
         type: Sequelize.STRING,
@@ -30,7 +20,7 @@ module.exports = sequelize.define('post', {
         allowNull: false,
     },
     usersRead: {
-        type: Sequelize.ARRAY(Sequelize.TEXT),
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: true,
     }
 });

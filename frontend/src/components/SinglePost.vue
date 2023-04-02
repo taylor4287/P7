@@ -15,6 +15,17 @@
     </div>
 </template>
 
+<script>
+export default {
+  beforeCreate () {
+    const userId = localStorage.getItem('userId')
+    if (!userId) {
+      this.$router.push({ path: '/login' })
+    }
+  }
+}
+</script>
+
 <style lang="scss">
     #singlePostView {
         margin: 100px;
@@ -39,9 +50,6 @@
         border-style: solid;
         height: 300px;
         border-radius: 10px 10px 0 0;
-    }
-    #userComment {
-        // border-radius: 0 0 10px 10px;
     }
     .comment {
         width: 600px;
