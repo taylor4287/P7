@@ -29,27 +29,29 @@ export default {
   },
   methods: {
     async login () {
-    //   console.log(this.form.email, this.form.password)
-      if (this.form.email === !'' || this.form.password === !'') {
+      const users = await axios.get('http://localhost:3000/users')
+      if (this.form.email === '' || this.form.password === '') {
         this.error = 'Invalid form'
         return
       }
       this.error = ''
-
-      const response = await axios.post('http://localhost:3000/users/login', {
-        email: this.form.email,
-        password: this.form.password
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
+      if (this.form.email === users.data[0].email) {
+        const response = await axios.post('http://localhost:3000/users/login', {
+          email: this.form.email,
+          password: this.form.password
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        console.warn(response)
+        if (response.status === 200) {
+          localStorage.setItem('userId', JSON.stringify(response.data.userId))
+          localStorage.setItem('token', JSON.stringify(response.data.token))
+          this.$router.push({ path: '/' })
         }
-      })
-      console.warn(response)
-      if (response.status === 200) {
-        alert('Login Done')
-        localStorage.setItem('userId', JSON.stringify(response.data.userId))
-        localStorage.setItem('token', JSON.stringify(response.data.token))
-        this.$router.push({ path: '/' })
+      } else {
+        this.error = 'Please enter correct email'
       }
     }
   },
