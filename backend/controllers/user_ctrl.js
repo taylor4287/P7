@@ -23,7 +23,7 @@ exports.signup = (req, res, next) => {
       .catch((error) => {
         console.log(error.stack);
         res.status(500).json({
-            error: error.message || error,
+          error: error.message || error,
         });
       });
   });
@@ -89,18 +89,16 @@ exports.deleteUser = (req, res, next) => {
 
 // find one user
 exports.findOne = (req, res, next) => {
-  User.findOne({id: req.params.id}).then (
-    (user) => {
+  User.findOne({ id: req.params.id })
+    .then((user) => {
       res.status(200).json(user);
-    }
-  ).catch(
-    (error) => {
+    })
+    .catch((error) => {
       console.log(error.stack);
       res.status(404).json({
         error: error.message || error,
       });
-    }
-  );
+    });
 };
 
 // find all users
@@ -110,7 +108,7 @@ exports.findAll = (req, res, next) => {
       res.status(200).json(users);
     })
     .catch((error) => {
-        console.log(error.stack);
+      console.log(error.stack);
       res.status(400).json({
         error: error.message || error,
       });

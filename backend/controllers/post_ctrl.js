@@ -21,7 +21,7 @@ exports.createPost = (req, res, next) => {
   // FIXME declare new variable
   req.body.post = JSON.parse(req.body.post);
   // FIXME declare url variable
-// FIXME change mongoose api to sequelize create post
+  // FIXME change mongoose api to sequelize create post
   const post = new Post({
     userId: req.body.userId,
     mediaUrl: url + "/images/" + req.file.filename,
