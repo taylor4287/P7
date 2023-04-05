@@ -1,15 +1,15 @@
 <template>
     <section id="createPost">
         <div id="imageInput">
-            <input @change="onFileSelected" id="input" type="file" accept="image/*">
+            <input @change="onFileSelected" ref="file" id="input" type="file" accept="image/*">
             <img v-if="url" id="uploadImage" :src="url">
         </div>
         <form @submit.prevent="post" id="inputText">
-            <span class="message">{{ error }}</span><br>
+            <span>{{ error }}</span><br>
             <h3>Title:</h3>
-            <input v-model="title" type="text" placeholder="Input title here ..."><br/>
-            <h4>Description:</h4>
-            <textarea id="script" type="text" placeholder="Input description here ..." cols="50" rows="10"></textarea><br/>
+            <input class="border" v-model="title" type="text" placeholder="Input title here ..."><br/>
+            <h4>Message:</h4>
+            <textarea id="script" class="border" v-model="message" type="text" placeholder="Input message here ..." cols="50" rows="10"></textarea><br/>
             <button v-on:click="post" id="post" class="postBtn">Post</button>
         </form>
     </section>
@@ -20,6 +20,7 @@
 // authorization headers -> proj 6
 
 <script>
+import axios from 'axios'
 export default {
   beforeCreate () {
     const userId = localStorage.getItem('userId')
@@ -31,7 +32,10 @@ export default {
     return {
       url: null,
       error: '',
-      title: ''
+      title: '',
+      message: '',
+      file: '',
+      userId: ''
     }
   },
   methods: {
@@ -39,10 +43,31 @@ export default {
       if (this.title === '') {
         this.error = 'Title Required'
       }
+      if (this.message === '') {
+        this.error = 'Message Required'
+      }
+      const formData = new FormData()
+      formData.append('mediaUrl', this.file)
+      formData.append('title', this.title)
+      formData.append('message', this.message)
+      formData.append('userId', this.userId)
+      const createPost = await axios.post('http://localhost:3000/posts', {
+        title: this.title,
+        message: this.message,
+        userId: localStorage.getItem('userId'),
+        formData
+      }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      console.log(createPost)
     },
     onFileSelected (e) {
       const file = e.target.files[0]
       this.url = URL.createObjectURL(file)
+      this.file = this.$refs.file.files[0]
+      console.log(this.file)
     }
   }
 }
@@ -58,11 +83,6 @@ export default {
     #imageInput {
         display: flex;
         justify-content: center;
-        border-style: solid;
-        border-color: black;
-        border-style: inset;
-        border-width: 2px;
-        border-radius: 10px;
         padding: 10px;
         width: 40%;
         height: 100%;
@@ -75,9 +95,6 @@ export default {
         width: 40%;
         input, textarea {
             padding: 10px;
-            border-radius: 10px;
-            border-style: inset;
-            border-width: 2px;
             width: 95.5%;
         }
     }

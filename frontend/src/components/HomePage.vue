@@ -1,13 +1,13 @@
 <template>
   <div id="homePosts">
-    <div id="postWrap">
+    <div id="postWrap" class="border">
       <div id="new">
         <span>Unread</span>
       </div>
     </div>
-    <div id="postWrap"></div>
-    <div id="postWrap"></div>
-    <div id="postWrap"></div>
+    <div id="postWrap" class="border"></div>
+    <div id="postWrap" class="border"></div>
+    <div id="postWrap" class="border"></div>
   </div>
 </template>
 
@@ -46,7 +46,8 @@ export default {
     left: 213px;
   }
   #new {
-    border: 1px solid red;
+    border: 2px solid black;
+    border-radius: 8px;
     padding: 10px;
     color: white;
     background-color: red;

@@ -31,4 +31,11 @@ html, body {
   border-radius: 50%;
   text-decoration: none;
 }
+.border {
+  border-style: solid;
+  border-color: black;
+  border-style: inset;
+  border-width: 2px;
+  border-radius: 10px;
+}
 </style>
