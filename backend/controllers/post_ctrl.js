@@ -20,15 +20,16 @@ exports.allPosts = (req, res) => {
 exports.createPost = async (req, res) => {
   // TODO add if statement to check if req.file exists
   if (req.file != null) {
-    console.log(req.body.post)
-    const url = req.protocol + '://' + req.get('host');
+    console.log(req.body.post);
+    const url = req.protocol + "://" + req.get("host");
     let { userId, title, message } = JSON.parse(req.body.post);
     const post = Post.build({
       userId,
       title,
       message,
-      mediaUrl: url + '/images/' + req.file.filename,
-    })
+      mediaUrl: url + "/images/" + req.file.filename,
+      usersRead: [],
+    });
     try {
       await post.save();
       res.status(201).json(post);
@@ -38,15 +39,15 @@ exports.createPost = async (req, res) => {
         error: error.message || error,
       });
     }
-  } else { 
+  } else {
     const postObject = req.body;
     const post = Post.build({
       userId: postObject.userId,
       mediaUrl: null,
       title: postObject.title,
       message: postObject.message,
-      usersRead: []
-    })
+      usersRead: [],
+    });
     try {
       await post.save();
       res.status(201).json(post);
