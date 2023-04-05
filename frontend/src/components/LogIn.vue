@@ -36,19 +36,23 @@ export default {
       }
       this.error = ''
       if (this.form.email === users.data[0].email) {
-        const response = await axios.post('http://localhost:3000/users/login', {
-          email: this.form.email,
-          password: this.form.password
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
+        try {
+          const response = await axios.post('http://localhost:3000/users/login', {
+            email: this.form.email,
+            password: this.form.password
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          console.warn(response)
+          if (response.status === 200) {
+            localStorage.setItem('userId', JSON.stringify(response.data.userId))
+            localStorage.setItem('token', JSON.stringify(response.data.token))
+            this.$router.push({ path: '/' })
           }
-        })
-        console.warn(response)
-        if (response.status === 200) {
-          localStorage.setItem('userId', JSON.stringify(response.data.userId))
-          localStorage.setItem('token', JSON.stringify(response.data.token))
-          this.$router.push({ path: '/' })
+        } catch (error) {
+          this.error = 'Please enter correct email and password'
         }
       } else {
         this.error = 'Please enter correct email'

@@ -3,7 +3,7 @@ const user = require("../models/user_model");
 const fs = require("fs");
 
 // get all posts
-exports.allPosts = (req, res, next) => {
+exports.allPosts = (req, res) => {
   Post.findAll()
     .then((posts) => {
       res.status(200).json(posts);
@@ -17,103 +17,63 @@ exports.allPosts = (req, res, next) => {
 };
 
 // create post
-exports.createPost = (req, res, next) => {
-  // FIXME declare new variable
-  req.body.post = JSON.parse(req.body.post);
-  // FIXME declare url variable
-  // FIXME change mongoose api to sequelize create post
-  const post = new Post({
-    userId: req.body.userId,
-    mediaUrl: url + "/images/" + req.file.filename,
-    title: req.body.post.title,
-    message: req.body.message,
-    usersRead: [],
-  });
-  post
-    .save()
-    .then(() => {
-      res.status(201).json({
-        message: "Post saved successfully!",
-      });
+exports.createPost = async (req, res) => {
+  // TODO add if statement to check if req.file exists
+  if (req.file != null) {
+    console.log(req.body.post)
+    const url = req.protocol + '://' + req.get('host');
+    let { userId, title, message } = JSON.parse(req.body.post);
+    const post = Post.build({
+      userId,
+      title,
+      message,
+      mediaUrl: url + '/images/' + req.file.filename,
     })
-    .catch((error) => {
-      // FIXME update error logging
+    try {
+      await post.save();
+      res.status(201).json(post);
+    } catch (error) {
+      console.log(error.stack);
       res.status(400).json({
-        error: error,
+        error: error.message || error,
       });
-    });
+    }
+  } else { 
+    const postObject = req.body;
+    const post = Post.build({
+      userId: postObject.userId,
+      mediaUrl: null,
+      title: postObject.title,
+      message: postObject.message,
+      usersRead: []
+    })
+    try {
+      await post.save();
+      res.status(201).json(post);
+    } catch (error) {
+      console.log(error.stack);
+      res.status(400).json({
+        error: error.message || error,
+      });
+    }
+  }
+  // if exists then create media url from multer info like in P6(ie do not send in request body)
+  // if not exists then get user id, title, message from req.body.post with JSON.parse
 };
 
 // get one post
-exports.getOne = (req, res, next) => {
-  Post.findOne({ id: req.params.id })
-    .then((post) => {
-      res.status(200).json(post);
-    })
-    .catch((error) => {
-      res.status(404).json({
-        error: error,
-      });
-    });
-};
-
-// modify post
-exports.modifyPost = (req, res, next) => {
-  let Post = new Post({ _id: req.params._id });
-  Post.findOne({ _id: req.params._id }).then((post) => {
-    if (req.file) {
-      const url = req.protocol + "://" + req.get("host");
-      req.body.post = JSON.parse(req.body.post);
-      post = {
-        id: req.params.id,
-        userName: req.body.post.userName,
-        images: url + "/images/" + req.file.filename,
-        date: req.body.post.date,
-        title: req.body.post.title,
-        message: req.body.post.message,
-        usersRead: req.body.post.usersRead,
-      };
-    } else {
-      post = {
-        id: req.params.id,
-        userName: req.body.userName,
-        images: req.body.images,
-        date: req.body.date,
-        title: req.body.title,
-        message: req.body.message,
-        usersRead: req.body.usersRead,
-      };
-    }
-    Post.updateOne({ _id: req.params.id }, post)
-      .then(() => {
-        res.status(201).json({
-          message: "Post updated successfully!",
-        });
-      })
-      .catch((error) => {
-        res.status(400).json({
-          error: error,
-        });
-      });
+exports.getOne = async (req, res) => {
+  const post = await Post.findOne({
+    where: {
+      id: req.params.id,
+    },
   });
-};
-
-// delete post
-exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id }).then((post) => {
-    const filename = sauce.imageUrl.split("/images/")[1];
-    fs.unlink("images/" + filename, () => {
-      Post.deleteOne({ _id: req.params.id })
-        .then(() => {
-          res.status(200).json({
-            message: "Deleted!",
-          });
-        })
-        .catch((error) => {
-          res.status(400).json({
-            error: error,
-          });
-        });
+  try {
+    res.status(200).json(post);
+  } catch (error) {
+    console.log(error.stack);
+    res.status(400).json({
+      error: error.message || error,
     });
-  });
+  }
 };
