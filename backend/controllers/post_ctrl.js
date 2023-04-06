@@ -22,7 +22,7 @@ exports.createPost = async (req, res) => {
   if (req.file != null) {
     console.log(req.body.post);
     const url = req.protocol + "://" + req.get("host");
-    let { userId, title, message } = JSON.parse(req.body.post);
+    let { userId, title, message } = req.body;
     const post = Post.build({
       userId,
       title,

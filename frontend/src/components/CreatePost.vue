@@ -7,17 +7,13 @@
         <form @submit.prevent="post" id="inputText">
             <span>{{ error }}</span><br>
             <h3>Title:</h3>
-            <input class="border" v-model="title" type="text" placeholder="Input title here ..."><br/>
+            <input class="border" v-model="title" name="title" type="text" placeholder="Input title here ..."><br/>
             <h4>Message:</h4>
-            <textarea id="script" class="border" v-model="message" type="text" placeholder="Input message here ..." cols="50" rows="10"></textarea><br/>
-            <button v-on:click="post" id="post" class="postBtn">Post</button>
+            <textarea id="script" class="border" v-model="message" name="message" type="text" placeholder="Input message here ..." cols="50" rows="10"></textarea><br/>
+            <button id="post" class="postBtn">Post</button>
         </form>
     </section>
 </template>
-
-// delete button needs post model and user model
-// need to figure out new posts
-// authorization headers -> proj 6
 
 <script>
 import axios from 'axios'
@@ -30,12 +26,11 @@ export default {
   },
   data () {
     return {
-      url: null,
+      url: '',
       error: '',
       title: '',
       message: '',
-      file: '',
-      userId: ''
+      file: ''
     }
   },
   methods: {
@@ -46,20 +41,26 @@ export default {
       if (this.message === '') {
         this.error = 'Message Required'
       }
+      if (this.title === '' || this.message === '') {
+        this.error = 'Title and Message Required'
+      }
+      // .then ((response) => {
+      //   console.log(response)
+      //   // this.$router.push({ path: '/' })
+      // })
+      // .catch((response) => {
+      //   console.log(response)
+      // })
       const formData = new FormData()
       formData.append('mediaUrl', this.file)
       formData.append('title', this.title)
       formData.append('message', this.message)
-      formData.append('userId', this.userId)
+      formData.append('userId', localStorage.getItem('userId'))
       const createPost = await axios.post('http://localhost:3000/posts', {
+        userId: localStorage.getItem('userId'),
         title: this.title,
         message: this.message,
-        userId: localStorage.getItem('userId'),
-        formData
-      }, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+        mediaUrl: this.file
       })
       console.log(createPost)
     },
