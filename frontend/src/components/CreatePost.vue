@@ -1,6 +1,6 @@
 <template>
     <section id="createPost">
-        <div id="imageInput">
+        <div id="imageInput" class="border">
             <input @change="onFileSelected" ref="file" id="input" type="file" accept="image/*">
             <img v-if="url" id="uploadImage" :src="url">
         </div>
@@ -44,13 +44,14 @@ export default {
       if (this.title === '' || this.message === '') {
         this.error = 'Title and Message Required'
       }
+      const userId = localStorage.getItem('userId')
       const formData = new FormData()
       formData.append('mediaUrl', this.file)
       formData.append('title', this.title)
       formData.append('message', this.message)
-      formData.append('userId', localStorage.getItem('userId'))
+      formData.append('userId', userId)
       const createPost = await axios.post('http://localhost:3000/posts', {
-        userId: localStorage.getItem('userId'),
+        userId: userId,
         title: this.title,
         message: this.message,
         mediaUrl: this.file
@@ -58,11 +59,17 @@ export default {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
+      }).then((response) => {
+        console.log(response)
+        // this.usersRead.push(userId)
+        if (createPost.status === 201) {
+          console.log(createPost)
+          this.$router.push({ path: '/' })
+        }
+      }).catch((error) => {
+        this.errorMessage = error.message
+        console.error('There was an error!', error)
       })
-      if (createPost.status === 201) {
-        console.log(createPost)
-        this.$router.push({ path: '/' })
-      }
     },
     onFileSelected (e) {
       const file = e.target.files[0]

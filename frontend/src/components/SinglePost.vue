@@ -9,7 +9,7 @@
 </template>
 
 <script>
-const axios = require('axios')
+// const axios = require('axios')
 export default {
   data () {
     return {
@@ -26,15 +26,14 @@ export default {
     }
   },
   mounted () {
-    axios
-      .get('http://localhost:3000/posts')
-      .then((response) => {
-        console.log(response.data)
-      })
-      .catch(error => {
-        this.errorMessage = error.message
-        console.error('There was an error!', error)
-      })
+    const params = new URLSearchParams(window.location.search)
+    const id = params.get('id')
+    const singlePost = 'http://localhost:3000/posts/' + id
+    console.log(params)
+    console.log(singlePost)
+    const userId = localStorage.getItem('userId')
+    this.usersRead.push(userId)
+    console.log(this.usersRead)
   }
 }
 </script>
