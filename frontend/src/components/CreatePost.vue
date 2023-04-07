@@ -44,13 +44,6 @@ export default {
       if (this.title === '' || this.message === '') {
         this.error = 'Title and Message Required'
       }
-      // .then ((response) => {
-      //   console.log(response)
-      //   // this.$router.push({ path: '/' })
-      // })
-      // .catch((response) => {
-      //   console.log(response)
-      // })
       const formData = new FormData()
       formData.append('mediaUrl', this.file)
       formData.append('title', this.title)
@@ -61,8 +54,15 @@ export default {
         title: this.title,
         message: this.message,
         mediaUrl: this.file
+      }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
-      console.log(createPost)
+      if (createPost.status === 201) {
+        console.log(createPost)
+        this.$router.push({ path: '/' })
+      }
     },
     onFileSelected (e) {
       const file = e.target.files[0]
