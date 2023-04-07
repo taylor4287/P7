@@ -5,11 +5,9 @@
         <span>Unread</span>
       </div>
     </div>
-    <div v-on:click="singlePostView" v-for='post in posts' :key='post.id' id="postWrap" class="border">
+    <div v-on:click="singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
       <h3 class="postTitle">{{ post.title }}</h3>
-      <div v-if="media">
-        <img v-for="media in medias" :key="media" class="postImg" :src='media'/>
-      </div>
+      <img v-if="post.mediaUrl" :key="media" class="postImg" :src="post.mediaUrl"/>
       <p class="postMessage">{{ post.message }}</p>
     </div>
   </div>
@@ -36,7 +34,6 @@ export default {
       .then((response) => {
         console.log(response.data)
         this.posts = response.data
-        this.media = response.data.mediaUrl
       })
       .catch(error => {
         this.errorMessage = error.message
@@ -44,8 +41,8 @@ export default {
       })
   },
   methods: {
-    singlePostView () {
-      this.$router.push({ path: 'singlePost' })
+    singlePostView (id) {
+      this.$router.push({ path: `/singlePost/${id}` })
     }
   }
 }

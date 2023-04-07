@@ -4,7 +4,6 @@ import LogIn from '../components/LogIn.vue'
 import SignUp from '../components/SignUp.vue'
 import AcCount from '../components/AcCount.vue'
 import CreatePost from '../components/CreatePost.vue'
-import EditPost from '../components/EditPost.vue'
 import SinglePost from '../components/SinglePost.vue'
 
 const routes = [
@@ -34,12 +33,7 @@ const routes = [
     component: CreatePost
   },
   {
-    path: '/editpost',
-    name: 'editpost',
-    component: EditPost
-  },
-  {
-    path: '/singlepost',
+    path: '/singlepost/:id',
     name: 'singlepost',
     component: SinglePost
   }
