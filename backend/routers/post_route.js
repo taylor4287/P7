@@ -10,5 +10,6 @@ router.get("/", postCtrl.allPosts);
 router.get("/:id", postCtrl.getOne);
 // TODO add auth middleware
 router.post("/", multer, postCtrl.createPost);
+router.put("/:id", postCtrl.userRead)
 
 module.exports = router;

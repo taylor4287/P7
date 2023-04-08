@@ -1,22 +1,22 @@
 <template>
     <div id="singlePostView">
-        <div id="postImg" class="border"></div>
+        <div v-if="post.mediaUrl" id="postImg" class="border">
+          <img :src="post.mediaUrl"/>
+        </div>
         <div>
-            <div id="title" class="border">{{ this.title }}</div>
-            <div id="message" class="border">{{ this.message }}</div>
+            <h1 id="title" class="border">{{ post.title }}</h1>
+            <p id="message" class="border">{{ post.message }}</p>
         </div>
     </div>
 </template>
 
 <script>
-// const axios = require('axios')
+const axios = require('axios')
 export default {
   data () {
     return {
-      media: null,
-      message: '',
-      title: '',
-      usersRead: []
+      id: this.$route.params.id,
+      post: {}
     }
   },
   beforeCreate () {
@@ -26,14 +26,16 @@ export default {
     }
   },
   mounted () {
-    const params = new URLSearchParams(window.location.search)
-    const id = params.get('id')
-    const singlePost = 'http://localhost:3000/posts/' + id
-    console.log(params)
-    console.log(singlePost)
-    const userId = localStorage.getItem('userId')
-    this.usersRead.push(userId)
-    console.log(this.usersRead)
+    axios.get('http://localhost:3000/posts/' + this.id)
+      .then((response) => {
+        console.log(response)
+        this.post = response.data
+      })
+    axios.put('http://localhost:3000/posts/' + this.id, {
+      userId: localStorage.getItem('userId')
+    }).then((response) => {
+      console.log(this.post.usersRead)
+    })
   }
 }
 </script>
@@ -51,21 +53,32 @@ export default {
     #singlePostView {
         margin: 100px 150px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        div {
+          margin: 0 30px;
+        }
     }
     #postImg {
         border-style: solid;
-        @include image(500px, $display:false)
+        @include image(500px, $display:false);
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        }
     }
     #title {
-        height: 100px;
+        height: 45px;
         width: 500px;
         margin-top: 50px;
+        text-align: center;
     }
     #message {
         border-style: solid;
-        height: 200px;
-        width: 500px;
+        height: 190px;
+        width: 490px;
         margin: 100px 0;
+        font-size: 20px;
+        padding: 10px
     }
 </style>

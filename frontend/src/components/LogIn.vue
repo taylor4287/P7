@@ -29,7 +29,13 @@ export default {
   },
   methods: {
     async login () {
-      const users = await axios.get('http://localhost:3000/users')
+      const token = localStorage.getItem('token')
+      const users = await axios.get('http://localhost:3000/users', {
+        headers: {
+          // eslint-disable-next-line
+          'Authorization': `Bearer ${token}`
+        }
+      })
       if (this.form.email === '' || this.form.password === '') {
         this.error = 'Invalid form'
         return

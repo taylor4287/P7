@@ -1,4 +1,3 @@
-const { data } = require("autoprefixer");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user_model");

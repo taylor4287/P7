@@ -78,3 +78,30 @@ exports.getOne = async (req, res) => {
     });
   }
 };
+
+exports.userRead = async (req, res) => {
+  const userId = req.body.userId;
+  const post = await Post.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
+  if (!post) {
+    res.status(400).json({
+      error: "no post found",
+    });
+  }
+  const usersRead = [...post.usersRead];
+  if (!usersRead.includes(userId)) {
+    usersRead.push(userId);
+    await post.update({ usersRead });
+    await post.save();
+    res.status(200).json({
+      success: "post read",
+    });
+  } else {
+    res.status(304).json({
+      message: "post already read by user",
+    });
+  }
+};

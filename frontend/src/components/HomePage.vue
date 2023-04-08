@@ -7,8 +7,8 @@
     </div>
     <div v-on:click="singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
       <h3 class="postTitle">{{ post.title }}</h3>
-      <img v-if="post.mediaUrl" :key="media" class="postImg" :src="post.mediaUrl"/>
-      <p class="postMessage">{{ post.message }}</p>
+      <img v-if="post.mediaUrl" class="postImg" :src="post.mediaUrl"/>
+      <p v-if="post.message" class="postMessage">{{ post.message }}</p>
     </div>
   </div>
 </template>
@@ -32,7 +32,6 @@ export default {
     axios
       .get('http://localhost:3000/posts')
       .then((response) => {
-        console.log(response.data)
         this.posts = response.data
       })
       .catch(error => {
@@ -61,6 +60,8 @@ export default {
     height: 250px;
     margin: 35px;
     cursor: pointer;
+    overflow: hidden;
+    object-fit: contain;
   }
   i {
     text-align: center;
@@ -87,17 +88,17 @@ export default {
     left: 20px;
     opacity: 0.5;
   }
-  $border: 10px;
+  $border: 8px;
   @mixin image ($size, $display:false) {
-    height: $size;
-    width: $size;
+    // height: $size;
+    max-width: $size;
     border-radius: $border;
     @if $display {
       display: none;
     }
   }
   .postImg {
-    @include image(100%, $display:false)
+    @include image(100%, $display:false);
   }
   .postMessage {
     @include image(100%, $display:true)
