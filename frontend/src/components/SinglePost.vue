@@ -27,6 +27,7 @@ export default {
   },
   async mounted () {
     const token = JSON.parse(localStorage.getItem('token'))
+    const userId = JSON.parse(localStorage.getItem('userId'))
     await axios.get('http://localhost:3000/posts/' + this.id, {
       headers: {
         // eslint-disable-next-line
@@ -40,7 +41,11 @@ export default {
     axios.put('http://localhost:3000/posts/' + this.id, {
       userId: localStorage.getItem('userId')
     }).then((response) => {
-      console.log(this.post.usersRead)
+      if (!this.post.usersRead.includes(userId)) {
+        this.post.usersRead.push(response)
+      } else {
+        console.log('user read', this.post)
+      }
     })
   }
 }

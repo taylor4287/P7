@@ -86,16 +86,9 @@ exports.deleteUser = (req, res, next) => {
 
 // find one user
 exports.findOne = (req, res, next) => {
-  User.findOne({ id: req.params.id })
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch((error) => {
-      console.log(error.stack);
-      res.status(404).json({
-        error: error.message || error,
-      });
-    });
+  User.findOne({ where: { id: req.params.id } })
+  .then(user => res.status(200).json({ user }))
+  .catch(error => res.status(404).json({ error }))
 };
 
 // find all users

@@ -1,14 +1,12 @@
 <template>
   <div id="homePosts">
-    <div id="postWrap" class="border">
-      <div id="new">
+    <div v-on:click="singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
+      <div v-if="unread" id="new">
         <span>Unread</span>
       </div>
-    </div>
-    <div v-on:click="singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
       <h3 class="postTitle">{{ post.title }}</h3>
       <img v-if="post.mediaUrl" class="postImg" :src="post.mediaUrl"/>
-      <p v-if="post.message" class="postMessage">{{ post.message }}</p>
+      <p class="postMessage">{{ post.message }}</p>
     </div>
   </div>
 </template>
@@ -18,8 +16,9 @@ const axios = require('axios')
 export default {
   data () {
     return {
-      posts: [],
-      media: ''
+      posts: {},
+      media: '',
+      unread: false
     }
   },
   beforeCreate () {
@@ -31,6 +30,7 @@ export default {
 
   async mounted () {
     const token = JSON.parse(localStorage.getItem('token'))
+    const userId = JSON.parse(localStorage.getItem('userId'))
     await axios.get('http://localhost:3000/posts', {
       headers: {
         // eslint-disable-next-line
@@ -39,6 +39,16 @@ export default {
     })
       .then((response) => {
         this.posts = response.data
+        console.log(userId)
+        for (let i = 0; i < this.posts.length; i++) {
+          console.log(this.posts[i].usersRead)
+          if (!this.posts[i].usersRead.includes(userId)) {
+            console.log(userId)
+            this.unread = true
+          } else {
+            this.unread = false
+          }
+        }
       })
       .catch(error => {
         this.errorMessage = error.message
@@ -88,11 +98,15 @@ export default {
     background-color: red;
     height: 15px;
     width: 50px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
   .postTitle {
     position: absolute;
     left: 20px;
     opacity: 0.5;
+    width: 145px;
   }
   $border: 8px;
   @mixin image ($size, $display:false) {
@@ -107,6 +121,7 @@ export default {
     @include image(100%, $display:false);
   }
   .postMessage {
-    @include image(100%, $display:true)
+    height: 80%;
+    margin: 70px 10px 10px 10px;
   }
 </style>

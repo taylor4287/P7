@@ -1,31 +1,20 @@
 
 <template>
     <section id="profile">
-        <div class="fixed">
-            <div id="profileImg">
-                <img src="../../images/icon.png">
-            </div>
-            <div id="flex">
-                <div class="name">
-                    <h2>{{ firstName }}</h2>
-                    <h2>{{ lastName }}</h2>
-                </div>
-                <h3>{{ jobTitle }}</h3>
-            </div>
-            <div id="accountBtns">
-                <button v-on:click="deleteAccount" type="button" class="deleteBtn" id="post">Delete Profile</button>
-                <button v-on:click="logout" type="button" class="deleteBtn" id="post">Log Out</button>
-            </div>
+      <div id="profileImg">
+        <img src="../../images/icon.png">
+      </div>
+      <div id="flex">
+        <div class="name">
+          <h2>{{ firstName }}</h2>
+          <h2>{{ lastName }}</h2>
         </div>
-        <section id="posts">
-            <p id="none">'Name' does not have any posts</p>
-            <div id="postImgs">
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
-            </div>
-        </section>
+        <h3>{{ jobTitle }}</h3>
+      </div>
+      <div id="accountBtns">
+        <button v-on:click="deleteAccount" type="button" class="deleteBtn" id="post">Delete Profile</button>
+        <button v-on:click="logout" type="button" class="deleteBtn" id="post">Log Out</button>
+      </div>
     </section>
 </template>
 
@@ -47,18 +36,16 @@ export default {
   },
   async created () {
     const token = JSON.parse(localStorage.getItem('token'))
-    const userId = localStorage.getItem('userId')
-    console.log(userId)
-    const load = await axios.get('http://localhost:3000/users/' + JSON.parse(userId), {
+    const userId = JSON.parse(localStorage.getItem('userId'))
+    const load = await axios.get('http://localhost:3000/users/' + userId, {
       headers: {
         // eslint-disable-next-line
         'Authorization': `Bearer ${token}`
       }
     })
-    console.log(load.data)
-    this.firstName = load.data.firstname
-    this.lastName = load.data.lastname
-    this.jobTitle = load.data.position
+    this.firstName = load.data.user.firstname
+    this.lastName = load.data.user.lastname
+    this.jobTitle = load.data.user.position
   },
   methods: {
     deleteAccount () {
@@ -88,8 +75,6 @@ export default {
 <style lang="scss">
     #profile {
         margin: 70px;
-        display: flex;
-        justify-content: space-between;
     }
     #profileImg {
         border-style: solid;
