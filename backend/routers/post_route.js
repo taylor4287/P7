@@ -5,11 +5,11 @@ const auth = require("../middleware/auth");
 const postCtrl = require("../controllers/post_ctrl");
 
 // TODO add auth middleware
-router.get("/", postCtrl.allPosts);
+router.get("/", auth, postCtrl.allPosts);
 // TODO add auth middleware
-router.get("/:id", postCtrl.getOne);
+router.get("/:id", auth, postCtrl.getOne);
 // TODO add auth middleware
-router.post("/", multer, postCtrl.createPost);
+router.post("/", auth, multer, postCtrl.createPost);
 router.put("/:id", postCtrl.userRead)
 
 module.exports = router;

@@ -30,39 +30,37 @@ exports.signup = (req, res, next) => {
 
 // login
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
-    .then((user) => {
-      if (!user) {
-        return res.status(401).json({
-          error: new Error("User not found!"),
-        });
+  User.findOne({ where: { email: req.body.email } })
+    .then((users) => {
+      if (!users) {
+        return res.status(401).json({ error: "User not found !" });
       }
-      bcrypt
-        .compare(req.body.password, user.password)
-        .then((valid) => {
-          if (!valid) {
-            return res.status(401).json({
-              error: "Incorrect password!",
+      bcrypt.hash(req.body.password, 10).then((hash) => {
+        bcrypt
+          .compare(req.body.password, hash, User.password)
+          .then((valid) => {
+            if (!valid) {
+              return res.status(401).json({ error: "Incorrect password !" });
+            }
+            res.status(200).json({
+              userId: users.id,
+              password: users.password,
+              token: jwt.sign({ userId: User._id }, "RANDOM_TOKEN_SECRET", {
+                expiresIn: "24h",
+              }),
             });
-          }
-          const token = jwt.sign({ userId: user.id }, "RANDOM_TOKEN_SECRET", {
-            expiresIn: "24h",
+          })
+          .catch((error) => {
+            console.log(error.stack);
+            res.status(400).json({
+              error: error.message || error,
+            });
           });
-          res.status(200).json({
-            userId: user.id,
-            token: token,
-          });
-        })
-        .catch((error) => {
-          console.log(error.stack);
-          res.status(500).json({
-            error: error.message || error,
-          });
-        });
+      });
     })
     .catch((error) => {
       console.log(error.stack);
-      res.status(500).json({
+      res.status(400).json({
         error: error.message || error,
       });
     });

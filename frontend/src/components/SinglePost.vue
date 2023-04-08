@@ -25,8 +25,14 @@ export default {
       this.$router.push({ path: '/login' })
     }
   },
-  mounted () {
-    axios.get('http://localhost:3000/posts/' + this.id)
+  async mounted () {
+    const token = JSON.parse(localStorage.getItem('token'))
+    await axios.get('http://localhost:3000/posts/' + this.id, {
+      headers: {
+        // eslint-disable-next-line
+        'Authorization': `Bearer ${token}`
+      }
+    })
       .then((response) => {
         console.log(response)
         this.post = response.data

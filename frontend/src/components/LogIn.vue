@@ -29,44 +29,31 @@ export default {
   },
   methods: {
     async login () {
-      const token = localStorage.getItem('token')
-      const users = await axios.get('http://localhost:3000/users', {
-        headers: {
-          // eslint-disable-next-line
-          'Authorization': `Bearer ${token}`
-        }
-      })
       if (this.form.email === '' || this.form.password === '') {
         this.error = 'Invalid form'
         return
       }
       this.error = ''
-      if (this.form.email === users.data[0].email) {
-        try {
-          const response = await axios.post('http://localhost:3000/users/login', {
-            email: this.form.email,
-            password: this.form.password
-          }, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          console.warn(response)
-          if (response.status === 200) {
-            localStorage.setItem('userId', JSON.stringify(response.data.userId))
-            localStorage.setItem('token', JSON.stringify(response.data.token))
-            this.$router.push({ path: '/' })
-          }
-        } catch (error) {
+      try {
+        const response = await axios.post('http://localhost:3000/users/login', {
+          email: this.form.email,
+          password: this.form.password
+        })
+        console.warn(response)
+        if (response.status === 200) {
+          localStorage.setItem('userId', JSON.stringify(response.data.userId))
+          localStorage.setItem('token', JSON.stringify(response.data.token))
+          this.$router.push({ path: '/' })
+        } else {
           this.error = 'Please enter correct email and password'
         }
-      } else {
-        this.error = 'Please enter correct email'
+      } catch {
+        this.error = 'Please enter correct email and password'
       }
     }
   },
   mounted () {
-    const userId = localStorage.getItem('userId')
+    const userId = JSON.parse(localStorage.getItem('userId'))
     if (userId) {
       this.$router.push({ path: '/' })
     }

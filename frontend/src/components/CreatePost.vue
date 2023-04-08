@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     async post () {
+      const token = JSON.parse(localStorage.getItem('token'))
       if (this.title === '') {
         this.error = 'Title Required'
       }
@@ -84,7 +85,9 @@ export default {
           },
           {
             headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'multipart/form-data',
+              // eslint-disable-next-line
+              'Authorization': `Bearer ${token}`
             }
           }
         )

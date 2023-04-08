@@ -46,19 +46,31 @@ export default {
     }
   },
   async created () {
-    const token = localStorage.getItem('token')
-    const load = await axios.get(
-      `http://localhost:3000/users/${token}`
-    )
+    const token = JSON.parse(localStorage.getItem('token'))
+    const userId = localStorage.getItem('userId')
+    console.log(userId)
+    const load = await axios.get('http://localhost:3000/users/' + JSON.parse(userId), {
+      headers: {
+        // eslint-disable-next-line
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    console.log(load.data)
     this.firstName = load.data.firstname
     this.lastName = load.data.lastname
     this.jobTitle = load.data.position
   },
   methods: {
     deleteAccount () {
+      const token = JSON.parse(localStorage.getItem('token'))
       const userId = JSON.parse(localStorage.getItem('userId'))
       axios.delete(
-        `http://localhost:3000/users/${userId}`
+        `http://localhost:3000/users/${userId}`, {
+          headers: {
+            // eslint-disable-next-line
+            'Authorization': `Bearer ${token}`
+          }
+        }
       ).then(() => {
         localStorage.clear()
         this.$router.push({ name: 'login' })
