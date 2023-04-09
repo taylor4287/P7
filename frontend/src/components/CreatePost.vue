@@ -6,7 +6,7 @@
         ref="file"
         id="input"
         type="file"
-        accept="image/*"
+        accept="image/* video/* audio/*"
       />
       <img v-if="url" id="uploadImage" :src="url" />
     </div>
@@ -54,7 +54,8 @@ export default {
       error: '',
       title: '',
       message: '',
-      file: ''
+      file: '',
+      usersRead: []
     }
   },
   methods: {
@@ -74,6 +75,7 @@ export default {
       formData.append('title', this.title)
       formData.append('message', this.message)
       formData.append('userId', localStorage.getItem('userId'))
+      formData.append('usersRead', this.usersRead.push(localStorage.getItem('userId')))
       try {
         const createPost = await axios.post(
           'http://localhost:3000/posts',
@@ -81,7 +83,8 @@ export default {
             userId: localStorage.getItem('userId'),
             title: this.title,
             message: this.message,
-            mediaUrl: this.file
+            mediaUrl: this.file,
+            usersRead: this.usersRead
           },
           {
             headers: {

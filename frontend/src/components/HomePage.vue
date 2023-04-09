@@ -1,11 +1,11 @@
 <template>
   <div id="homePosts">
     <div v-on:click="singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
-      <div v-if="unread" id="new">
+      <div v-if="posts.unread" id="new">
         <span>Unread</span>
       </div>
       <h3 class="postTitle">{{ post.title }}</h3>
-      <img v-if="post.mediaUrl" class="postImg" :src="post.mediaUrl"/>
+      <img v-if="posts.image" class="postImg" :src="post.mediaUrl">
       <p class="postMessage">{{ post.message }}</p>
     </div>
   </div>
@@ -17,8 +17,7 @@ export default {
   data () {
     return {
       posts: {},
-      media: '',
-      unread: false
+      media: ''
     }
   },
   beforeCreate () {
@@ -39,14 +38,19 @@ export default {
     })
       .then((response) => {
         this.posts = response.data
+        console.log(this.posts)
         console.log(userId)
         for (let i = 0; i < this.posts.length; i++) {
           console.log(this.posts[i].usersRead)
-          if (!this.posts[i].usersRead.includes(userId)) {
-            console.log(userId)
-            this.unread = true
+          if (this.posts[i].mediaUrl === null) {
+            this.posts.image = false
           } else {
-            this.unread = false
+            this.posts.image = true
+          }
+          if (this.posts[i].usersRead.includes(userId)) {
+            this.posts.unread = false
+          } else {
+            this.posts.unread = true
           }
         }
       })
@@ -110,8 +114,8 @@ export default {
   }
   $border: 8px;
   @mixin image ($size, $display:false) {
-    // height: $size;
-    max-width: $size;
+    // max-height: $size;
+    width: $size;
     border-radius: $border;
     @if $display {
       display: none;

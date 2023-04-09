@@ -1,7 +1,13 @@
 <template>
     <div id="singlePostView">
-        <div v-if="post.mediaUrl" id="postImg" class="border">
-          <img :src="post.mediaUrl"/>
+        <div v-if="video" id="VideoImg" class="border">
+          <video id="video" width="400" height="500" :src="post.mediaUrl" controls>
+            <source :src="post.mediaUrl" type="video/*">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div v-else-if="image" id="postImg" class="border">
+          <img :src="post.mediaUrl" type="image/*"/>
         </div>
         <div>
             <h1 id="title" class="border">{{ post.title }}</h1>
@@ -37,16 +43,29 @@ export default {
       .then((response) => {
         console.log(response)
         this.post = response.data
+        if (this.post.mediaUrl === null) {
+          this.video = false
+          this.image = false
+        } else if (this.post.mediaUrl.includes('jpeg') || this.post.mediaUrl.includes('jpg') || this.post.mediaUrl.includes('webp') || this.post.mediaUrl.includes('gif')) {
+          this.video = false
+          this.image = true
+        } else if (this.post.mediaUrl.includes('mp4') || this.post.mediaUrl.includes('oog') || this.post.mediaUrl.includes('webm')) {
+          this.video = true
+          this.image = false
+        }
       })
-    axios.put('http://localhost:3000/posts/' + this.id, {
-      userId: localStorage.getItem('userId')
-    }).then((response) => {
-      if (!this.post.usersRead.includes(userId)) {
-        this.post.usersRead.push(response)
-      } else {
-        console.log('user read', this.post)
-      }
-    })
+    console.log(userId)
+    await axios.put('http://localhost:3000/posts/' + this.id)
+      .then((response) => {
+        if (response.status === 200) {
+          if (!this.post.usersRead.includes(userId)) {
+            this.post.usersRead.push(userId)
+            console.log(this.post.usersRead)
+          } else {
+            console.log('User already read')
+          }
+        }
+      })
   }
 }
 </script>
@@ -55,7 +74,7 @@ export default {
     // $border: 10px;
   @mixin image ($size, $display:false) {
     height: $size;
-    width: $size;
+    max-width: $size;
     // border-radius: $border;
     @if $display {
       display: none;
