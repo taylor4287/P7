@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const sequelize = require("../config/db.config");
 
 module.exports = sequelize.define("post", {
-  // look these up
   userId: {
     type: Sequelize.INTEGER,
     allowNull: false,

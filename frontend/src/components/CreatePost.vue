@@ -43,6 +43,7 @@
 import axios from 'axios'
 export default {
   beforeCreate () {
+    // making sure user is logged in
     const userId = localStorage.getItem('userId')
     if (!userId) {
       this.$router.push({ path: '/login' })
@@ -60,6 +61,7 @@ export default {
   },
   methods: {
     async post () {
+      // adding requirements for title and message
       const token = JSON.parse(localStorage.getItem('token'))
       if (this.title === '') {
         this.error = 'Title Required'
@@ -75,7 +77,11 @@ export default {
       formData.append('title', this.title)
       formData.append('message', this.message)
       formData.append('userId', localStorage.getItem('userId'))
-      formData.append('usersRead', this.usersRead.push(localStorage.getItem('userId')))
+      formData.append(
+        'usersRead',
+        this.usersRead.push(localStorage.getItem('userId'))
+      )
+      // creating post
       try {
         const createPost = await axios.post(
           'http://localhost:3000/posts',
@@ -90,7 +96,7 @@ export default {
             headers: {
               'Content-Type': 'multipart/form-data',
               // eslint-disable-next-line
-              'Authorization': `Bearer ${token}`
+              Authorization: `Bearer ${token}`,
             }
           }
         )
@@ -104,6 +110,7 @@ export default {
       }
     },
     onFileSelected (e) {
+      // image handling
       const file = e.target.files[0]
       this.url = URL.createObjectURL(file)
       this.file = this.$refs.file.files[0]

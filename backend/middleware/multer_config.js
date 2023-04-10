@@ -11,7 +11,7 @@ const MIME_TYPES = {
   "video/ogg": "ogg",
   "audio/mp3": "mp3",
   "audio/ogg": "ogg",
-  "audio/wav": "wav"
+  "audio/wav": "wav",
 };
 
 // storing imaged in images folder

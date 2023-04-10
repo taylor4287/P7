@@ -58,8 +58,6 @@ exports.createPost = async (req, res) => {
       });
     }
   }
-  // if exists then create media url from multer info like in P6(ie do not send in request body)
-  // if not exists then get user id, title, message from req.body.post with JSON.parse
 };
 
 // get one post
@@ -79,6 +77,7 @@ exports.getOne = async (req, res) => {
   }
 };
 
+// users read array handling
 exports.userRead = async (req, res) => {
   const userId = req.body.postUserId;
   const post = await Post.findOne({
