@@ -11,8 +11,8 @@
         <router-link v-if="isSignup" id="post" class="headerBtn" to="/login">Login</router-link>
         <router-link v-if="isLogin" id="post" class="headerBtn" to="/signup">Sign Up</router-link>
       </div>
+      <router-view/>
   </nav>
-  <router-view/>
 </template>
 
 <script>

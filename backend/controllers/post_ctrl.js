@@ -80,7 +80,7 @@ exports.getOne = async (req, res) => {
 };
 
 exports.userRead = async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.body.postUserId;
   const post = await Post.findOne({
     where: {
       id: req.params.id,

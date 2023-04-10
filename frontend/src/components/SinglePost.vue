@@ -22,7 +22,9 @@ export default {
   data () {
     return {
       id: this.$route.params.id,
-      post: {}
+      post: {},
+      image: false,
+      video: false
     }
   },
   beforeCreate () {
@@ -34,38 +36,50 @@ export default {
   async mounted () {
     const token = JSON.parse(localStorage.getItem('token'))
     const userId = JSON.parse(localStorage.getItem('userId'))
-    await axios.get('http://localhost:3000/posts/' + this.id, {
+    let response = await axios.get('http://localhost:3000/posts/' + this.id, {
       headers: {
         // eslint-disable-next-line
         'Authorization': `Bearer ${token}`
       }
     })
-      .then((response) => {
-        console.log(response)
-        this.post = response.data
-        if (this.post.mediaUrl === null) {
-          this.video = false
-          this.image = false
-        } else if (this.post.mediaUrl.includes('jpeg') || this.post.mediaUrl.includes('jpg') || this.post.mediaUrl.includes('webp') || this.post.mediaUrl.includes('gif')) {
-          this.video = false
-          this.image = true
-        } else if (this.post.mediaUrl.includes('mp4') || this.post.mediaUrl.includes('oog') || this.post.mediaUrl.includes('webm')) {
-          this.video = true
-          this.image = false
-        }
-      })
+    console.log(response)
+    this.post = response.data
+    if (this.post.mediaUrl === null) {
+      this.video = false
+      this.image = false
+    } else if (this.post.mediaUrl.includes('jpeg') || this.post.mediaUrl.includes('jpg') || this.post.mediaUrl.includes('webp') || this.post.mediaUrl.includes('gif')) {
+      this.video = false
+      this.image = true
+    } else if (this.post.mediaUrl.includes('mp4') || this.post.mediaUrl.includes('oog') || this.post.mediaUrl.includes('webm')) {
+      this.video = true
+      this.image = false
+    }
     console.log(userId)
-    await axios.put('http://localhost:3000/posts/' + this.id)
-      .then((response) => {
-        if (response.status === 200) {
-          if (!this.post.usersRead.includes(userId)) {
-            this.post.usersRead.push(userId)
-            console.log(this.post.usersRead)
-          } else {
-            console.log('User already read')
-          }
+    try {
+      response = await axios.put('http://localhost:3000/posts/' + this.id, {
+        postUserId: parseInt(localStorage.getItem('userId'))
+      }, {
+        headers: {
+          'content-type': 'application/json',
+          // eslint-disable-next-line
+          'Authorization': `Bearer ${token}`
         }
       })
+    } catch (error) {
+      if (error.esponse.status === 304) {
+        console.log('User already read')
+      } else {
+        console.log(error)
+      }
+    }
+    if (response.status === 200) {
+      if (!this.post.usersRead.includes(userId)) {
+        this.post.usersRead.push(userId)
+        console.log(this.post.usersRead)
+      } else {
+        console.log('User already read')
+      }
+    }
   }
 }
 </script>

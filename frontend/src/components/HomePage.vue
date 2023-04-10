@@ -1,11 +1,11 @@
 <template>
   <div id="homePosts">
-    <div v-on:click="singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
-      <div v-if="posts.unread" id="new">
+    <div v-on:click="$event => singlePostView(post.id)" v-for='post in posts' :key='post.id' id="postWrap" class="border">
+      <div v-if="post.unread" id="new">
         <span>Unread</span>
       </div>
       <h3 class="postTitle">{{ post.title }}</h3>
-      <img v-if="posts.image" class="postImg" :src="post.mediaUrl">
+      <img v-if="post.image" class="postImg" :src="post.mediaUrl">
       <p class="postMessage">{{ post.message }}</p>
     </div>
   </div>
@@ -43,14 +43,14 @@ export default {
         for (let i = 0; i < this.posts.length; i++) {
           console.log(this.posts[i].usersRead)
           if (this.posts[i].mediaUrl === null) {
-            this.posts.image = false
+            this.posts[i].image = false
           } else {
-            this.posts.image = true
+            this.posts[i].image = true
           }
           if (this.posts[i].usersRead.includes(userId)) {
-            this.posts.unread = false
+            this.posts[i].unread = false
           } else {
-            this.posts.unread = true
+            this.posts[i].unread = true
           }
         }
       })
