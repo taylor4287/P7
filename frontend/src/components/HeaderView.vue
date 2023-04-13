@@ -146,9 +146,9 @@ export default {
 .createBtn {
   width: 80px;
 }
-// #screenRoutes {
-//   display: none;
-// }
+#screenRoutes {
+  display: none;
+}
 @media screen and (max-width: 768px) {
   #logo {
     display: none;

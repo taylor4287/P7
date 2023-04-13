@@ -1,7 +1,7 @@
 <template>
   <div id="singlePostView">
     <div v-if="video" id="VideoImg" class="border">
-      <video id="video" width="400" height="500" :src="post.mediaUrl" controls>
+      <video id="video" width="300" height="500" :src="post.mediaUrl" controls>
         <source :src="post.mediaUrl" type="video/*" />
         Your browser does not support the video tag.
       </video>
@@ -156,6 +156,10 @@ export default {
       height: 100%;
       width: 100%;
     }
+  }
+  #postVideo {
+    max-width: 300px;
+    height: 300px;
   }
   .postMessage {
     max-width: 300px;
