@@ -47,11 +47,8 @@ export default {
       })
       .then((response) => {
         this.posts = response.data
-        console.log(this.posts)
-        console.log(userId)
         // showing images if any is added
         for (let i = 0; i < this.posts.length; i++) {
-          console.log(this.posts[i].usersRead)
           if (this.posts[i].mediaUrl === null) {
             this.posts[i].image = false
           } else {
@@ -137,5 +134,14 @@ $border: 8px;
 .postMessage {
   height: 80%;
   margin: 70px 10px 10px 10px;
+}
+@media screen and (max-width: 768px) {
+  #postWrap {
+    width: 500px;
+    height: 300px;
+  }
+  #homePosts {
+    margin: -50px 0 0 0;
+  }
 }
 </style>

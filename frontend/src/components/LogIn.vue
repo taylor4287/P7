@@ -9,7 +9,7 @@
         <input v-model="form.email" type="email" /><br />
         <label for="password">Password:</label><br />
         <input v-model="form.password" type="password" /><br />
-        <button id="post" class="submitBtn" type="button" v-on:click="login">
+        <button  class="post submitBtn" type="button" v-on:click="login">
           Submit
         </button>
       </form>
@@ -95,5 +95,13 @@ export default {
   height: 50px;
   padding: 15px;
   cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  #login {
+    margin-top: -50px;
+  }
+  .submitBtn {
+    margin-left: 60px;
+  }
 }
 </style>

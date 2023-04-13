@@ -21,10 +21,10 @@
         placeholder="Create Password"
       /><br />
       <input type="text" v-model="form.position" placeholder="Job Role" /><br />
-      <button type="button" id="post" class="postBtn" v-on:click="signUp">
+      <button type="button" class="post postBtn" v-on:click="signUp">
         Sign Up
       </button>
-      <router-link to="/logIn">Have an account?</router-link>
+      <router-link to="/login">Have an account?</router-link>
     </form>
   </section>
 </template>
@@ -111,6 +111,11 @@ export default {
     height: 45px;
     padding: 15px;
     cursor: pointer;
+  }
+}
+@media screen and (max-width: 768px) {
+  #signUp {
+    margin-top: -60px;
   }
 }
 </style>

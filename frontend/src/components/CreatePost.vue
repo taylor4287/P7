@@ -34,7 +34,7 @@
         length="500"
       ></textarea
       ><br />
-      <button id="post" class="postBtn">Post</button>
+      <button class="post postBtn">Post</button>
     </form>
   </section>
 </template>
@@ -62,6 +62,7 @@ export default {
   methods: {
     async post () {
       // adding requirements for title and message
+      const userId = JSON.parse(localStorage.getItem('userId'))
       const token = JSON.parse(localStorage.getItem('token'))
       if (this.title === '') {
         this.error = 'Title Required'
@@ -76,11 +77,9 @@ export default {
       formData.append('mediaUrl', this.file)
       formData.append('title', this.title)
       formData.append('message', this.message)
-      formData.append('userId', localStorage.getItem('userId'))
+      formData.append('userId', userId)
       formData.append(
-        'usersRead',
-        this.usersRead.push(localStorage.getItem('userId'))
-      )
+        'usersRead', this.usersRead)
       // creating post
       try {
         const createPost = await axios.post(
@@ -90,7 +89,7 @@ export default {
             title: this.title,
             message: this.message,
             mediaUrl: this.file,
-            usersRead: this.usersRead
+            usersRead: this.usersRead.push(userId)
           },
           {
             headers: {
@@ -101,6 +100,7 @@ export default {
           }
         )
         if (createPost.status === 201) {
+          console.log(this.usersRead)
           console.log(createPost)
           this.$router.push({ path: '/' })
         }
@@ -156,5 +156,26 @@ export default {
   height: 40px;
   padding: 10px;
   cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  #createPost {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+  }
+  #imageInput {
+    height: 300px;
+    width: 300px;
+  }
+  #inputText {
+    width: 100%;
+  }
+  #uploadImage {
+    display: none;
+  }
+  .postBtn {
+    margin-left: 130px;
+    margin-bottom: 40px;
+  }
 }
 </style>

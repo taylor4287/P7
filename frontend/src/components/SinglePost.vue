@@ -9,7 +9,7 @@
     <div v-else-if="image" id="postImg" class="border">
       <img :src="post.mediaUrl" type="image/*" />
     </div>
-    <div>
+    <div class="postMessage">
       <h1 id="title" class="border">{{ post.title }}</h1>
       <p id="message" class="border">{{ post.message }}</p>
     </div>
@@ -141,5 +141,32 @@ export default {
   margin: 100px 0;
   font-size: 20px;
   padding: 10px;
+}
+@media screen and (max-width: 768px) {
+  #singlePostView {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+  #postImg {
+    max-width: 300px;
+    height: 300px;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .postMessage {
+    max-width: 300px;
+    max-height: 100%;
+    #title {
+      width: 300px;
+    }
+    #message {
+      width: 280px;
+      margin: 20px 0;
+    }
+  }
 }
 </style>

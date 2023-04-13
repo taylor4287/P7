@@ -18,7 +18,6 @@ exports.allPosts = (req, res) => {
 
 // create post
 exports.createPost = async (req, res) => {
-  // TODO add if statement to check if req.file exists
   if (req.file != null) {
     console.log(req.body.post);
     const url = req.protocol + "://" + req.get("host");
@@ -46,7 +45,7 @@ exports.createPost = async (req, res) => {
       mediaUrl: null,
       title: postObject.title,
       message: postObject.message,
-      usersRead: [],
+      usersRead: [postObject.userId],
     });
     try {
       await post.save();

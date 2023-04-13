@@ -19,8 +19,7 @@ body {
   padding: 0;
   height: 100%;
 }
-#post {
-  margin-left: 65px;
+.post {
   display: block;
   text-align: center;
   border-color: black;

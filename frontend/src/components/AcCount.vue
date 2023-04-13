@@ -14,12 +14,11 @@
       <button
         v-on:click="deleteAccount"
         type="button"
-        class="deleteBtn"
-        id="post"
+        class="post deleteBtn"
       >
         Delete Profile
       </button>
-      <button v-on:click="logout" type="button" class="deleteBtn" id="post">
+      <button v-on:click="logout" type="button" class="post deleteBtn">
         Log Out
       </button>
     </div>
@@ -113,7 +112,7 @@ export default {
 }
 .deleteBtn {
   text-align: center;
-  margin-left: 45px;
+  margin-left: 30px;
   width: 120px;
   height: 50px;
   padding: 15px;
@@ -141,5 +140,22 @@ export default {
 #accountBtns {
   display: flex;
   margin-top: 20px;
+}
+@media screen and (max-width: 768px) {
+  #profile {
+    margin: -10px 20px 20px 20px;
+  }
+  #flex {
+    left: 200px;
+    top: 300px;
+  }
+  #profileImg {
+  width: 150px;
+  height: 150px;
+  z-index: 1;
+  img {
+    width: 150px;
+  }
+}
 }
 </style>
