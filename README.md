@@ -1,4 +1,4 @@
-# P7_Rodewald_Taylor *Ongoing*
+# P7_Rodewald_Taylor
 OpenClassrooms Project 7: Create a Web Application with Vue.js
 
 I was tasked with building an internal social network for Groupomania's employees to facilitate more interaction between colleagues.
